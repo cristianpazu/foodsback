@@ -2,9 +2,14 @@ package com.example.foods.service;
 
 import com.example.foods.entidades.menu.SubMenu;
 
+import java.util.List;
+
 public interface SubMenuService {
 
 
-    String registrarSubmenu(SubMenu subMenu);
+    SubMenu registrarSubmenu(SubMenu subMenu);
+
+    List<SubMenu> traerSubmenu();
+
 
 }

@@ -1,5 +1,6 @@
 package com.example.foods.entidades.menu;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,10 +17,12 @@ public class SubMenu {
 
     String nombre;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id")
+
     Menu menu;
 
     @OneToMany(mappedBy = "submenu")
+    @JsonIgnore
     List<Productos> productos;
 }

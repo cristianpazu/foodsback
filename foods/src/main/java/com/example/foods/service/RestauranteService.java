@@ -2,7 +2,16 @@ package com.example.foods.service;
 
 import com.example.foods.entidades.menu.Restaurante;
 
+import java.util.List;
+
 public interface RestauranteService {
 
-    String registrarRestaurante(Restaurante restaurante);
+    Restaurante registrarRestaurante(Restaurante restaurante);
+
+    Restaurante traerRestaurantesId(Integer id);
+
+    List<Restaurante> traerRestaurantes();
+
+
+
 }
