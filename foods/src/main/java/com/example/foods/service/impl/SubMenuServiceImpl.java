@@ -30,6 +30,8 @@ public class SubMenuServiceImpl implements SubMenuService {
 
             List<SubMenu> subMenuList = submenuRepository.findAll();
 
+            System.out.println("subMenuList = " + subMenuList);
+            
             if (subMenuList.isEmpty()){
                 throw new RuntimeException("La lista esta vacia");
             }

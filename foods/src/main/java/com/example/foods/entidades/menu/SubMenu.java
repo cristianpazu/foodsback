@@ -1,6 +1,7 @@
 package com.example.foods.entidades.menu;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,10 +20,10 @@ public class SubMenu {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id")
-
+@JsonIgnore
     Menu menu;
 
     @OneToMany(mappedBy = "submenu")
-    @JsonIgnore
+    @JsonManagedReference
     List<Productos> productos;
 }

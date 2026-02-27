@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class MenuServiceImpl implements MenuService {
 
-@Autowired
+    @Autowired
     MenuRepository menuRepository;
 
     @Override
@@ -52,4 +52,6 @@ public class MenuServiceImpl implements MenuService {
 
 
     }
+
+
 }

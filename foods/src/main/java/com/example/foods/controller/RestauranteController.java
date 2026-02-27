@@ -1,5 +1,6 @@
 package com.example.foods.controller;
 
+import com.example.foods.entidades.dto.RestauranteDTO;
 import com.example.foods.entidades.menu.Restaurante;
 import com.example.foods.service.RestauranteService;
 import lombok.AllArgsConstructor;
@@ -32,4 +33,11 @@ public class RestauranteController {
             return ResponseEntity.ok(restauranteService.traerRestaurantes());
 
         }
+
+
+    @GetMapping("traer/menuTodo/{id}")
+    public ResponseEntity<RestauranteDTO> traerMenuTodo(@PathVariable("id") Integer id){
+        return ResponseEntity.ok(restauranteService.traerMenuTodo(id));
+    }
+
 }

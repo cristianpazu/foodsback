@@ -4,6 +4,6 @@ import com.example.foods.entidades.menu.Productos;
 
 public interface ProductosService {
 
-    String registrarProducto(Productos productos);
+    Productos registrarProducto(Productos productos);
 
 }
