@@ -18,7 +18,7 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Intege
             "INNER JOIN Menu  m on rs.idRestaurante = m.restaurante.idRestaurante " +
             "INNER JOIN SubMenu  sm on m.idMenu = sm.menu.idMenu " +
             "INNER JOIN Productos  p on sm.idSubmen = p.submenu.idSubmen " +
-            "WHERE rs.idRestaurante = :id" )
+            "WHERE rs.idRestaurante = :id and p.activo = true " )
     Optional<Restaurante> findByMenu(@Param("id") Integer id);
 
 }

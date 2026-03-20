@@ -4,5 +4,7 @@ import com.example.foods.entidades.pedidos.Mesas;
 
 public interface MesasService {
 
-    String registrarMesas(Mesas mesas);
+    Mesas registrarMesas(Mesas mesas);
+
+    Mesas actualizaarMesas(Integer id, Mesas mesas);
 }

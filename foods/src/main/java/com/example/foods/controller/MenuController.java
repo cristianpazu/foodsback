@@ -16,9 +16,14 @@ public class MenuController {
   MenuService menuService;
 
   @PostMapping("registrar/menu")
-  public ResponseEntity<String> registrarMenu(@RequestBody Menu menu){
+  public ResponseEntity<Menu> registrarMenu(@RequestBody Menu menu){
       return ResponseEntity.ok(menuService.registrarMenu(menu));
   }
+
+    @PostMapping("actualizar/menu")
+    public ResponseEntity<Menu> actualizarMenu(@PathVariable Integer id, @RequestBody Menu menu){
+        return ResponseEntity.ok(menuService.actualizarMenu(id,menu));
+    }
 
     @GetMapping("traer/menu")
     public ResponseEntity<List<Menu>> traerMenu(){

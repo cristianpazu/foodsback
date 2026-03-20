@@ -7,11 +7,11 @@ import java.util.List;
 public interface MenuService {
 
 
-    String registrarMenu(Menu menu);
+    Menu registrarMenu(Menu menu);
 
-    String actualizarMenu(Menu menu);
+    Menu actualizarMenu(Integer id, Menu menu);
 
-    String inactivarMenu(Boolean inactiva);
+    Menu inactivarMenu(Integer id, Boolean inactiva);
 
     List<Menu> taerMenu();
 

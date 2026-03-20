@@ -1,5 +1,6 @@
 package com.example.foods.service.impl;
 
+import com.example.foods.entidades.menu.Productos;
 import com.example.foods.entidades.menu.Restaurante;
 import com.example.foods.entidades.menu.SubMenu;
 import com.example.foods.repository.menu.SubmenuRepository;
@@ -40,5 +41,23 @@ public class SubMenuServiceImpl implements SubMenuService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public SubMenu actualizarSubmenu(Integer id, SubMenu subMenu) {
+        SubMenu subMenu1 = submenuRepository.findById(id).orElseThrow(() -> new RuntimeException("SubMenu no encontrado"));
+        subMenu1.setNombre(subMenu.getNombre());
+
+        return submenuRepository.save(subMenu1);
+    }
+
+
+    @Override
+    public SubMenu inactivarSubmenu(Integer id, Boolean inactivarSubmenu) {
+
+        SubMenu subMenu = submenuRepository.findById(id).orElseThrow(() -> new RuntimeException("SubMenu no encontrado"));
+        subMenu.setActivo(inactivarSubmenu);
+
+        return submenuRepository.save(subMenu);
     }
 }

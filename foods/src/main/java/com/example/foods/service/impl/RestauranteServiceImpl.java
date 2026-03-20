@@ -62,6 +62,11 @@ public class RestauranteServiceImpl implements RestauranteService {
         Restaurante r = restauranteRepository.findByMenu(id)
                 .orElseThrow(() -> new RuntimeException("No existe"));
 
+
+        System.out.println("r.getIdRestaurante() = " + r.getIdRestaurante());
+        System.out.println("r.getIdRestaurante() = " + r.getMenus());
+
+
         RestauranteDTO restauranteDTO = new RestauranteDTO();
         restauranteDTO.setId(r.getIdRestaurante());
         restauranteDTO.setNombres(r.getNombre());
@@ -73,14 +78,16 @@ public class RestauranteServiceImpl implements RestauranteService {
 
 
         List<MenuDTO> menusDTO = r.getMenus().stream()
+                .filter(Menus ->Menus.isActivo())
                 .map(menu -> {
 
                     MenuDTO menuDTO = new MenuDTO();
 
                     menuDTO.setNombreMenu(menu.getNombreMenu());
-                    menuDTO.setActivo(menu.getActivo());
+                    menuDTO.setActivo(menu.isActivo());
 
                     List<SubMenuDTO> submenus = menu.getSubmenus().stream()
+                            .filter(SubMenu ->SubMenu.isActivo())
                             .map(sm -> {
 
                                 SubMenuDTO smDTO = new SubMenuDTO();
@@ -88,11 +95,13 @@ public class RestauranteServiceImpl implements RestauranteService {
                                 smDTO.setNombre(sm.getNombre());
 
                                 List<ProductoDTO> productos = sm.getProductos().stream()
+                                        .filter(p -> p.isActivo())
                                         .map(p -> new ProductoDTO(
                                                 p.getIdProductos(),
                                                 p.getNombre(),
                                                 p.getDescripcion(),
-                                                p.getPrecio()
+                                                p.getPrecio(),
+                                                p.isActivo()
                                         )).toList();
 
                                 smDTO.setProductos(productos);
@@ -108,5 +117,14 @@ public class RestauranteServiceImpl implements RestauranteService {
         restauranteDTO.setMenus(menusDTO);
 
         return restauranteDTO;
+    }
+
+    @Override
+    public Restaurante actualizarRestaurante(Integer id, Restaurante restaurante) {
+        Restaurante  restaurante1 = restauranteRepository.findById(id) .orElseThrow(() -> new RuntimeException("Restaurante no encontrado"));
+
+        restaurante1.setNombre(restaurante.getNombre());
+
+        return restauranteRepository.save(restaurante1);
     }
 }

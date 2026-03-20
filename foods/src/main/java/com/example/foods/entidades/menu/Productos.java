@@ -21,7 +21,7 @@ public class Productos {
 
   Integer Precio;
 
-    private boolean activo;
+  boolean activo;
 
     @ManyToOne
     @JoinColumn(name = "submenu_id")

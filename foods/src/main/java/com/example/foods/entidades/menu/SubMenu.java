@@ -18,9 +18,11 @@ public class SubMenu {
 
     String nombre;
 
+    boolean activo;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id")
-@JsonIgnore
+    @JsonIgnore
     Menu menu;
 
     @OneToMany(mappedBy = "submenu")

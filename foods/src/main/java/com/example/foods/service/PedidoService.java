@@ -4,5 +4,7 @@ import com.example.foods.entidades.pedidos.Pedido;
 
 public interface PedidoService {
 
-    String registrarPedido(Pedido pedido);
+    Pedido registrarPedido(Pedido pedido);
+
+
 }

@@ -15,21 +15,32 @@ public class MenuServiceImpl implements MenuService {
     MenuRepository menuRepository;
 
     @Override
-    public String registrarMenu(Menu menu) {
+    public Menu registrarMenu(Menu menu) {
 
-        menuRepository.save(menu);
+      Menu menu1 =  menuRepository.save(menu);
 
-        return "Se ha guardado Exitosamen";
+        return menu1;
     }
 
     @Override
-    public String actualizarMenu(Menu menu) {
-        return "";
+    public Menu actualizarMenu(Integer id,Menu menu) {
+     Menu  menu1 = menuRepository.findById(id) .orElseThrow(() -> new RuntimeException("Menu no encontrado"));
+
+           menu1.setNombreMenu(menu.getNombreMenu());
+
+        return menuRepository.save(menu1);
     }
 
     @Override
-    public String inactivarMenu(Boolean inactiva) {
-        return "";
+    public Menu inactivarMenu(Integer id ,Boolean inactiva) {
+
+
+
+        Menu menu = menuRepository.findById(id) .orElseThrow(() -> new RuntimeException("Menu no encontrado"));
+
+        menu.setActivo(inactiva);
+
+        return menuRepository.save(menu);
     }
 
     @Override

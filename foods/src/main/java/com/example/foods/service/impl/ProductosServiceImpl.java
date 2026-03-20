@@ -1,6 +1,8 @@
 package com.example.foods.service.impl;
 
+import com.example.foods.entidades.menu.Menu;
 import com.example.foods.entidades.menu.Productos;
+import com.example.foods.entidades.menu.Restaurante;
 import com.example.foods.entidades.menu.SubMenu;
 import com.example.foods.repository.menu.ProductosRepository;
 import com.example.foods.repository.menu.SubmenuRepository;
@@ -39,5 +41,26 @@ public class ProductosServiceImpl implements ProductosService {
         Productos productos1 = productosRepository.save(productos);
 
         return productos1;
+    }
+
+    @Override
+    public Productos actualizarProducto(Integer id,Productos productos) {
+        Productos productos1 = productosRepository.findById(id).orElseThrow(() -> new RuntimeException("Productos no encontrado"));
+
+        productos1.setNombre(productos.getNombre());
+        productos1.setDescripcion(productos.getDescripcion());
+        productos1.setPrecio(productos.getPrecio());
+
+        return productosRepository.save(productos1);
+    }
+
+    @Override
+    public Productos inactivarProductos(Integer id, Boolean inactiva) {
+
+        Productos productos = productosRepository.findById(id).orElseThrow(() -> new RuntimeException("Productos no encontrado"));
+
+        productos.setActivo(inactiva);
+
+        return productosRepository.save(productos);
     }
 }

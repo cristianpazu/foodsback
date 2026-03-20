@@ -15,4 +15,5 @@ public interface RestauranteService {
 
     RestauranteDTO traerMenuTodo(Integer id);
 
+    Restaurante actualizarRestaurante(Integer id, Restaurante restaurante);
 }

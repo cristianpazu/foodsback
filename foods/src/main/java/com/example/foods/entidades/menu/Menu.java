@@ -18,7 +18,7 @@ public class Menu {
 
      String nombreMenu;
 
-     Boolean activo;
+     boolean activo;
 
     @OneToMany(mappedBy = "menu")
    @JsonIgnore

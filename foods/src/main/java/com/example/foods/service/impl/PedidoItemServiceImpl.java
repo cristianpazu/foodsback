@@ -6,16 +6,16 @@ import com.example.foods.service.PedidoService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PedidoItemServiceImpl implements PedidoService {
+public class PedidoItemServiceImpl  {
 
-
+/*
     PedidoRepository pedidoRepository;
 
     @Override
-    public String registrarPedido(Pedido pedido) {
+    public Pedido registrarPedido(Pedido pedido) {
 
-        pedidoRepository.save(pedido);
 
-        return "exito";
-    }
+
+        return pedidoRepository.save(pedido);
+    } */
 }
