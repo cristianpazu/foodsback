@@ -1,7 +1,9 @@
 package com.example.foods.service.impl;
 
 import ch.qos.logback.core.util.StringUtil;
+import com.example.foods.entidades.dto.HistorialPedidoDTO;
 import com.example.foods.entidades.menu.Productos;
+import com.example.foods.entidades.menu.Restaurante;
 import com.example.foods.entidades.pedidos.Mesas;
 import com.example.foods.entidades.pedidos.Pedido;
 import com.example.foods.entidades.pedidos.PedidoItem;
@@ -12,7 +14,11 @@ import com.example.foods.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PedidoServiceImpl implements PedidoService {
@@ -33,9 +39,17 @@ MesasRepository mesasRepository;
         if (mesa.getDisponibildad() == false){
             throw new RuntimeException("Mesa no esta disponible");
         }
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String formattedNow = now.format(formatter);
+        String formattedNowHour = now.format(formatterHour);
+
+
 
         pedido.setMesas(mesa);
-        pedido.setFecha(LocalDateTime.now());
+        pedido.setFecha(LocalDate.parse(formattedNow));
+        pedido.setHora(formattedNowHour);
 
         Integer totales = 0;
         for (PedidoItem item : pedido.getItems()) {
@@ -60,6 +74,36 @@ MesasRepository mesasRepository;
         pedido.setTotalCuenta(totales);
         mesa.setDisponibildad(false);
         return pedidoRepository.save(pedido);
+    }
+
+    @Override
+    public List<HistorialPedidoDTO> consultarHistoriaPedido() {
+
+        try{
+
+
+            List<HistorialPedidoDTO> historial = pedidoRepository.findByPedidos();
+/*
+            List<HistorialPedidoDTO> historial = historials.stream()
+                    .map(r -> new HistorialPedidoDTO(
+                            r.getIdPedido(),
+                            r.getNombreMesa(),
+                            r.getNombreProducto(),
+                            r.getPrecio(),
+                            r.getCantidad(),
+                            r.getFecha(),
+                            r.getTotalCuenta()
+                    ))
+                    .collect(Collectors.toList()); */
+
+            if (historial.isEmpty()){
+                throw new RuntimeException("La lista esta vacia");
+            }
+
+            return historial;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 /*
     @Override

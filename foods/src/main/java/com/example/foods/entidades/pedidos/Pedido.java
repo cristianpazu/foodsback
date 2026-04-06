@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,7 +24,9 @@ public class Pedido {
     @JoinColumn(name = "mesa_id")
     Mesas mesas;
 
-    LocalDateTime fecha;
+  LocalDate fecha;
+
+  String hora;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     @JsonManagedReference

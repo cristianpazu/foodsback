@@ -3,6 +3,9 @@ package com.example.foods.entidades.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class HistorialPedidoDTO {
@@ -13,22 +16,22 @@ public class HistorialPedidoDTO {
 
     String nombreProducto;
 
-    Integer predio;
+    Integer precio;
 
     Integer cantidad;
 
-    String fecha;
+    LocalDate fecha;
 
     Integer totalCuenta;
 
     public HistorialPedidoDTO() {
     }
 
-    public HistorialPedidoDTO(Integer idPedido, String nombreMesa, String nombreProducto, Integer predio, Integer cantidad, String fecha, Integer totalCuenta) {
+    public HistorialPedidoDTO(Integer idPedido, String nombreMesa, String nombreProducto, Integer precio, Integer cantidad, LocalDate fecha, Integer totalCuenta) {
         this.idPedido = idPedido;
         this.nombreMesa = nombreMesa;
         this.nombreProducto = nombreProducto;
-        this.predio = predio;
+        this.precio = precio;
         this.cantidad = cantidad;
         this.fecha = fecha;
         this.totalCuenta = totalCuenta;
