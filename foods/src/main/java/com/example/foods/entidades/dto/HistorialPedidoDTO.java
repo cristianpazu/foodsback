@@ -22,18 +22,21 @@ public class HistorialPedidoDTO {
 
     LocalDate fecha;
 
+    String hora;
+
     Integer totalCuenta;
 
     public HistorialPedidoDTO() {
     }
 
-    public HistorialPedidoDTO(Integer idPedido, String nombreMesa, String nombreProducto, Integer precio, Integer cantidad, LocalDate fecha, Integer totalCuenta) {
+    public HistorialPedidoDTO(Integer idPedido, String nombreMesa, String nombreProducto, Integer precio, Integer cantidad, LocalDate fecha, String hora,Integer totalCuenta) {
         this.idPedido = idPedido;
         this.nombreMesa = nombreMesa;
         this.nombreProducto = nombreProducto;
         this.precio = precio;
         this.cantidad = cantidad;
         this.fecha = fecha;
+        this.hora = hora;
         this.totalCuenta = totalCuenta;
     }
 }

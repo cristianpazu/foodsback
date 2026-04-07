@@ -105,6 +105,35 @@ MesasRepository mesasRepository;
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public List<HistorialPedidoDTO> consultarHistoriaPedidoFecha(LocalDate fechaInicial, LocalDate fechaFinal) {
+        try{
+
+
+            List<HistorialPedidoDTO> historial = pedidoRepository.findByPedidosFecha(fechaInicial,fechaFinal);
+/*
+            List<HistorialPedidoDTO> historial = historials.stream()
+                    .map(r -> new HistorialPedidoDTO(
+                            r.getIdPedido(),
+                            r.getNombreMesa(),
+                            r.getNombreProducto(),
+                            r.getPrecio(),
+                            r.getCantidad(),
+                            r.getFecha(),
+                            r.getTotalCuenta()
+                    ))
+                    .collect(Collectors.toList()); */
+
+            if (historial.isEmpty()){
+                throw new RuntimeException("La lista esta vacia");
+            }
+
+            return historial;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 /*
     @Override
     public Pedido registrarPedido(PedidoRequestDTO dto) {

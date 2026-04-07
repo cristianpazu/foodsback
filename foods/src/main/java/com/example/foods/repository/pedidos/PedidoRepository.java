@@ -5,19 +5,32 @@ import com.example.foods.entidades.menu.Menu;
 import com.example.foods.entidades.pedidos.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import javax.swing.text.html.Option;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
-@Query(value = "SELECT new com.example.foods.entidades.dto.HistorialPedidoDTO( p.idPedido, m.nombre, p2.Nombre, p2.Precio, ped.cantidad, p.fecha, p.totalCuenta ) " +
+@Query(value = "SELECT new com.example.foods.entidades.dto.HistorialPedidoDTO( p.idPedido, m.nombre, p2.Nombre, p2.Precio, ped.cantidad, p.fecha, p.hora,p.totalCuenta ) " +
         "FROM Pedido p " +
         "JOIN Mesas m ON m.idMesa = p.mesas.idMesa " +
         "JOIN PedidoItem ped ON p.idPedido = ped.idPedidoItem " +
         "JOIN Productos p2 ON p2.idProductos = ped.productos.idProductos ")
 List<HistorialPedidoDTO> findByPedidos();
+
+
+    @Query(value = "SELECT new com.example.foods.entidades.dto.HistorialPedidoDTO( p.idPedido, m.nombre, p2.Nombre, p2.Precio, ped.cantidad, p.fecha, p.hora,p.totalCuenta ) " +
+            "FROM Pedido p " +
+            "JOIN Mesas m ON m.idMesa = p.mesas.idMesa " +
+            "JOIN PedidoItem ped ON p.idPedido = ped.idPedidoItem " +
+            "JOIN Productos p2 ON p2.idProductos = ped.productos.idProductos " +
+            "WHERE p.fecha BETWEEN :fechaInicial AND :fechaFinal")
+    List<HistorialPedidoDTO> findByPedidosFecha(
+            @Param("fechaInicial") LocalDate fechaInicial,
+            @Param("fechaFinal") LocalDate fechaFinal);
 /*
 select p.id_pedido, m.nombre,p2.nombre, p2.precio, ped.cantidad, p.fecha, p.total_cuenta
 from pedido p inner join mesas m on m.id_mesa = p.mesa_id

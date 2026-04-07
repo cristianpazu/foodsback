@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -28,6 +29,15 @@ public class PedidoController {
     public ResponseEntity<List<HistorialPedidoDTO>> consultarPedido(){
 
         return ResponseEntity.ok(pedidoService.consultarHistoriaPedido());
+
+    }
+
+
+    @GetMapping("/historial/pedidos/{fechaInicial}/{fechaFinal}")
+    public ResponseEntity<List<HistorialPedidoDTO>> consultarPedidoFecha(  @PathVariable("fechaInicial") LocalDate fechaInicial,
+                                                                           @PathVariable("fechaFinal") LocalDate fechaFinal){
+
+        return ResponseEntity.ok(pedidoService.consultarHistoriaPedidoFecha(fechaInicial,fechaFinal));
 
     }
 
