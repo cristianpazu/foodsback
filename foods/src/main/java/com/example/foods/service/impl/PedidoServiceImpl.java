@@ -4,10 +4,12 @@ import ch.qos.logback.core.util.StringUtil;
 import com.example.foods.entidades.dto.HistorialPedidoDTO;
 import com.example.foods.entidades.menu.Productos;
 import com.example.foods.entidades.menu.Restaurante;
+import com.example.foods.entidades.pedidos.EstadoPedido;
 import com.example.foods.entidades.pedidos.Mesas;
 import com.example.foods.entidades.pedidos.Pedido;
 import com.example.foods.entidades.pedidos.PedidoItem;
 import com.example.foods.repository.menu.ProductosRepository;
+import com.example.foods.repository.pedidos.EstadoRepository;
 import com.example.foods.repository.pedidos.MesasRepository;
 import com.example.foods.repository.pedidos.PedidoRepository;
 import com.example.foods.service.PedidoService;
@@ -26,9 +28,13 @@ public class PedidoServiceImpl implements PedidoService {
 
     PedidoRepository pedidoRepository;
     @Autowired
-MesasRepository mesasRepository;
+   MesasRepository mesasRepository;
+
     @Autowired
     ProductosRepository productosRepository;
+
+    @Autowired
+    EstadoRepository estadoRepository;
 
     @Override
     public Pedido registrarPedido(Pedido pedido) {
@@ -70,7 +76,7 @@ MesasRepository mesasRepository;
 
 
         }
-
+        pedido.setEstadoPago(estadoRepository.findById(1).get());
         pedido.setTotalCuenta(totales);
         mesa.setDisponibildad(false);
         return pedidoRepository.save(pedido);
@@ -133,6 +139,28 @@ MesasRepository mesasRepository;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public String actualizarPedido(Integer idPedido) {
+
+        Pedido estadoPago = pedidoRepository.findById(idPedido).orElseThrow();
+        
+        EstadoPedido estado = estadoRepository.findById(2).orElseThrow();
+
+        System.out.println("estado.getNombre() = " + estado.getNombre());
+        
+        estadoPago.setEstadoPago(estado);
+
+
+        estadoPago.getMesas().setDisponibildad(true);
+
+        // Guardar los cambios
+        pedidoRepository.save(estadoPago);
+
+
+
+        return "Pago realizado";
     }
 /*
     @Override

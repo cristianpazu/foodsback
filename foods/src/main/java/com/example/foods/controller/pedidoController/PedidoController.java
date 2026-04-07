@@ -1,6 +1,7 @@
 package com.example.foods.controller.pedidoController;
 
 import com.example.foods.entidades.dto.HistorialPedidoDTO;
+import com.example.foods.entidades.menu.Menu;
 import com.example.foods.entidades.pedidos.Pedido;
 import com.example.foods.service.PedidoService;
 import lombok.AllArgsConstructor;
@@ -39,6 +40,12 @@ public class PedidoController {
 
         return ResponseEntity.ok(pedidoService.consultarHistoriaPedidoFecha(fechaInicial,fechaFinal));
 
+    }
+
+
+    @PostMapping("actualizar/pedido/{id}")
+    public ResponseEntity<String> actualizarEstadoPago(@PathVariable Integer id){
+        return ResponseEntity.ok(pedidoService.actualizarPedido(id));
     }
 
 }

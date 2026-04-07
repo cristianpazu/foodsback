@@ -14,5 +14,6 @@ public interface PedidoService {
 
     List<HistorialPedidoDTO> consultarHistoriaPedidoFecha(LocalDate fechaInicial, LocalDate fechaFinal );
 
+    String actualizarPedido(Integer idPedido);
 
 }

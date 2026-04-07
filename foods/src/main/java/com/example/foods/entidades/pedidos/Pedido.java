@@ -32,6 +32,9 @@ public class Pedido {
     @JsonManagedReference
     private List<PedidoItem> items;
 
+  @ManyToOne
+  @JoinColumn(name = "estado_id")
+  private EstadoPedido estadoPago;
 
     Integer totalCuenta;
 
