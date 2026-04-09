@@ -37,9 +37,7 @@ public class PedidoController {
     @GetMapping("/historial/pedidos/{fechaInicial}/{fechaFinal}")
     public ResponseEntity<List<HistorialPedidoDTO>> consultarPedidoFecha(  @PathVariable("fechaInicial") LocalDate fechaInicial,
                                                                            @PathVariable("fechaFinal") LocalDate fechaFinal){
-
         return ResponseEntity.ok(pedidoService.consultarHistoriaPedidoFecha(fechaInicial,fechaFinal));
-
     }
 
 
