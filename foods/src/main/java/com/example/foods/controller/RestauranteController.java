@@ -17,7 +17,7 @@ public class RestauranteController {
 
     RestauranteService restauranteService;
 
-@PostMapping("/registrar/restaurante")
+    @PostMapping("/registrar/restaurante")
     public ResponseEntity<Restaurante> registrarRestaurante(@RequestBody Restaurante restaurante){
         return ResponseEntity.ok(restauranteService.registrarRestaurante(restaurante));
     }
@@ -28,11 +28,10 @@ public class RestauranteController {
         return ResponseEntity.ok(restauranteService.traerRestaurantesId(id));
     }
 
-        @GetMapping("/traer/restaurante")
-        public ResponseEntity<List<Restaurante>> treaerRestaurantes() {
-            return ResponseEntity.ok(restauranteService.traerRestaurantes());
-
-        }
+    @GetMapping("/traer/restaurante")
+    public ResponseEntity<List<Restaurante>> treaerRestaurantes() {
+        return ResponseEntity.ok(restauranteService.traerRestaurantes());
+    }
 
 
     @GetMapping("traer/menuTodo/{id}")
