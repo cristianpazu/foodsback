@@ -8,7 +8,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@CrossOrigin(origins = "*")
 @AllArgsConstructor
     @RequestMapping("/Mesas")
 public class MesasController {
@@ -25,6 +28,12 @@ public class MesasController {
     @PostMapping("/actualizar/mesa/{id}")
     public ResponseEntity<Mesas> actualizarMesas(@PathVariable Integer id, @RequestBody Mesas mesas){
         return ResponseEntity.ok(mesasService.actualizaarMesas(id, mesas));
+
+    }
+
+    @GetMapping("/listar/mesas")
+    public ResponseEntity<List<Mesas>> listarMesas(){
+        return ResponseEntity.ok(mesasService.traerMesas());
 
     }
 

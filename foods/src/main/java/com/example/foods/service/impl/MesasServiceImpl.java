@@ -7,6 +7,8 @@ import com.example.foods.service.MesasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MesasServiceImpl implements MesasService {
 
@@ -26,5 +28,22 @@ public class MesasServiceImpl implements MesasService {
         mesas1.setNombre(mesas.getNombre());
 
         return mesasRepository.save(mesas1);
+    }
+
+    @Override
+    public List<Mesas> traerMesas() {
+try{
+        List<Mesas> subMesasList = mesasRepository.findAll();
+
+        System.out.println("subMenuList = " + subMesasList);
+
+        if (subMesasList.isEmpty()){
+            throw new RuntimeException("La lista esta vacia");
+        }
+
+        return subMesasList;
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
     }
 }
