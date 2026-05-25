@@ -16,7 +16,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 
 @Query(value = "SELECT new com.example.foods.entidades.dto.HistorialPedidoDTO( p.idPedido, m.nombre, p2.Nombre, p2.Precio, ped.cantidad, p.fecha, p.hora,p.totalCuenta ) " +
         "FROM Pedido p " +
-        "JOIN Mesas m ON m.idMesa = p.mesas.idMesa " +
+        "JOIN Mesas m ON m.idMesas = p.mesas.idMesas " +
         "JOIN PedidoItem ped ON p.idPedido = ped.idPedidoItem " +
         "JOIN Productos p2 ON p2.idProductos = ped.productos.idProductos ")
 List<HistorialPedidoDTO> findByPedidos();
@@ -24,7 +24,7 @@ List<HistorialPedidoDTO> findByPedidos();
 
     @Query(value = "SELECT new com.example.foods.entidades.dto.HistorialPedidoDTO( p.idPedido, m.nombre, p2.Nombre, p2.Precio, ped.cantidad, p.fecha, p.hora,p.totalCuenta ) " +
             "FROM Pedido p " +
-            "JOIN Mesas m ON m.idMesa = p.mesas.idMesa " +
+            "JOIN Mesas m ON m.idMesas = p.mesas.idMesas " +
             "JOIN PedidoItem ped ON p.idPedido = ped.idPedidoItem " +
             "JOIN Productos p2 ON p2.idProductos = ped.productos.idProductos " +
             "WHERE p.fecha BETWEEN :fechaInicial AND :fechaFinal")

@@ -19,6 +19,6 @@ public class Restaurante {
      String nombre;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "restaurante")
+    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL)
      List<Menu> menus;
 }

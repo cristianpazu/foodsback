@@ -14,9 +14,9 @@ public class Mesas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer idMesa;
+    Integer idMesas;
 
     String nombre;
 
-    Boolean disponibildad;
+    Boolean disponibilidad;
 }

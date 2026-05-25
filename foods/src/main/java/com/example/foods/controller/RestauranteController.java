@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 @RequestMapping("/restaurante")
 public class RestauranteController {
 
@@ -37,6 +38,11 @@ public class RestauranteController {
     @GetMapping("traer/menuTodo/{id}")
     public ResponseEntity<RestauranteDTO> traerMenuTodo(@PathVariable("id") Integer id){
         return ResponseEntity.ok(restauranteService.traerMenuTodo(id));
+    }
+
+    @PutMapping("actualizar/restaurante/{id}")
+    public ResponseEntity<Restaurante> actualizarRestaurante(@PathVariable("id") Integer id, @RequestBody Restaurante restaurante){
+        return ResponseEntity.ok(restauranteService.actualizarRestaurante(id,restaurante));
     }
 
 }

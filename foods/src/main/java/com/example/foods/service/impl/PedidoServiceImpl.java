@@ -39,10 +39,10 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Pedido registrarPedido(Pedido pedido) {
 
-        Mesas mesa = mesasRepository.findById(pedido.getMesas().getIdMesa())
+        Mesas mesa = mesasRepository.findById(pedido.getMesas().getIdMesas())
                 .orElseThrow(() -> new RuntimeException("Mesa no existe"));
 
-        if (mesa.getDisponibildad() == false){
+        if (mesa.getDisponibilidad() == false){
             throw new RuntimeException("Mesa no esta disponible");
         }
         LocalDateTime now = LocalDateTime.now();
@@ -78,7 +78,7 @@ public class PedidoServiceImpl implements PedidoService {
         }
         pedido.setEstadoPago(estadoRepository.findById(1).get());
         pedido.setTotalCuenta(totales);
-        mesa.setDisponibildad(false);
+        mesa.setDisponibilidad(false);
         return pedidoRepository.save(pedido);
     }
 
@@ -153,7 +153,7 @@ public class PedidoServiceImpl implements PedidoService {
         estadoPago.setEstadoPago(estado);
 
 
-        estadoPago.getMesas().setDisponibildad(true);
+        estadoPago.getMesas().setDisponibilidad(true);
 
         // Guardar los cambios
         pedidoRepository.save(estadoPago);

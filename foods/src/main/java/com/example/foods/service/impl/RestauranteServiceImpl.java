@@ -6,17 +6,22 @@ import com.example.foods.entidades.dto.RestauranteDTO;
 import com.example.foods.entidades.dto.SubMenuDTO;
 import com.example.foods.entidades.menu.Menu;
 import com.example.foods.entidades.menu.Restaurante;
+import com.example.foods.repository.menu.MenuRepository;
 import com.example.foods.repository.menu.RestauranteRepository;
 import com.example.foods.service.RestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class RestauranteServiceImpl implements RestauranteService {
     @Autowired
     RestauranteRepository restauranteRepository;
+
+    @Autowired
+    MenuRepository menuRepository;
 
     @Override
     public Restaurante registrarRestaurante(Restaurante restaurante) {
@@ -124,6 +129,25 @@ public class RestauranteServiceImpl implements RestauranteService {
         Restaurante  restaurante1 = restauranteRepository.findById(id) .orElseThrow(() -> new RuntimeException("Restaurante no encontrado"));
 
         restaurante1.setNombre(restaurante.getNombre());
+
+
+
+        if (restaurante.getMenus() != null) {
+
+            List<Menu> menus = new ArrayList<>();
+
+            for (Menu menuRequest : restaurante.getMenus()) {
+
+                Menu menu = menuRepository.findById(menuRequest.getIdMenu())
+                        .orElseThrow(() -> new RuntimeException("Menu no existe"));
+
+                menu.setRestaurante(restaurante1);
+
+                menus.add(menu);
+            }
+
+            restaurante1.setMenus(menus);
+        }
 
         return restauranteRepository.save(restaurante1);
     }
