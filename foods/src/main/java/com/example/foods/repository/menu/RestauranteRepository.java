@@ -21,4 +21,8 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Intege
             "WHERE rs.idRestaurante = :id and p.activo = true " )
     Optional<Restaurante> findByMenu(@Param("id") Integer id);
 
+
+
+
+
 }

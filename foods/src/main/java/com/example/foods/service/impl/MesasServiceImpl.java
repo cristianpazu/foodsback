@@ -5,6 +5,7 @@ import com.example.foods.entidades.pedidos.Mesas;
 import com.example.foods.repository.pedidos.MesasRepository;
 import com.example.foods.service.MesasService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class MesasServiceImpl implements MesasService {
     @Override
     public List<Mesas> traerMesas() {
 try{
-        List<Mesas> subMesasList = mesasRepository.findAll();
+        List<Mesas> subMesasList = mesasRepository.findAll(   Sort.by(Sort.Direction.ASC, "idMesas"));
 
         System.out.println("subMenuList = " + subMesasList);
 
