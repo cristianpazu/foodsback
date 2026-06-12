@@ -1,5 +1,6 @@
 package com.example.foods.service;
 
+import com.example.foods.entidades.dto.SubMenuResponseDTO;
 import com.example.foods.entidades.menu.Restaurante;
 import com.example.foods.entidades.menu.SubMenu;
 
@@ -15,6 +16,8 @@ public interface SubMenuService {
     List<SubMenu> traerSubmenu();
 
     SubMenu inactivarSubmenu(Integer id, Boolean inactivarSubmenu);
+
+    List<SubMenuResponseDTO> consultarSubmenu();
 
 
 }

@@ -1,13 +1,18 @@
 package com.example.foods.service.impl;
 
+import com.example.foods.entidades.dto.ProductoResponseDTO;
 import com.example.foods.entidades.menu.Menu;
 import com.example.foods.entidades.menu.Productos;
 import com.example.foods.entidades.menu.Restaurante;
 import com.example.foods.entidades.menu.SubMenu;
+import com.example.foods.entidades.pedidos.Mesas;
 import com.example.foods.repository.menu.ProductosRepository;
 import com.example.foods.repository.menu.SubmenuRepository;
 import com.example.foods.service.ProductosService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ProductosServiceImpl implements ProductosService {
@@ -62,5 +67,24 @@ public class ProductosServiceImpl implements ProductosService {
         productos.setActivo(inactiva);
 
         return productosRepository.save(productos);
+    }
+
+    @Override
+    public List<ProductoResponseDTO> consultarProductos() {
+        try{
+            List<ProductoResponseDTO> productosList = productosRepository.findProductoResponseDtos();
+
+            System.out.println("subMenuList = " + productosList);
+
+
+            if (productosList.isEmpty()){
+                throw new RuntimeException("La lista esta vacia");
+            }
+
+            return productosList;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+
+    }
     }
 }

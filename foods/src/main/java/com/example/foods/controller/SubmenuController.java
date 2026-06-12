@@ -1,5 +1,6 @@
 package com.example.foods.controller;
 
+import com.example.foods.entidades.dto.SubMenuResponseDTO;
 import com.example.foods.entidades.menu.Restaurante;
 import com.example.foods.entidades.menu.SubMenu;
 import com.example.foods.service.SubMenuService;
@@ -26,6 +27,12 @@ public class SubmenuController {
     @GetMapping("/traer/submenus")
     public ResponseEntity<List<SubMenu>> treaerSubmenu() {
         return ResponseEntity.ok(subMenuService.traerSubmenu());
+
+    }
+
+    @GetMapping("/listar/submenus")
+    public ResponseEntity<List<SubMenuResponseDTO>> consultarSubmenu() {
+        return ResponseEntity.ok(subMenuService.consultarSubmenu());
 
     }
 }

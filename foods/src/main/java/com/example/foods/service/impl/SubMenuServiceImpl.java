@@ -1,5 +1,6 @@
 package com.example.foods.service.impl;
 
+import com.example.foods.entidades.dto.SubMenuResponseDTO;
 import com.example.foods.entidades.menu.Productos;
 import com.example.foods.entidades.menu.Restaurante;
 import com.example.foods.entidades.menu.SubMenu;
@@ -59,5 +60,24 @@ public class SubMenuServiceImpl implements SubMenuService {
         subMenu.setActivo(inactivarSubmenu);
 
         return submenuRepository.save(subMenu);
+    }
+
+    @Override
+    public List<SubMenuResponseDTO> consultarSubmenu() {
+        try{
+
+
+            List<SubMenuResponseDTO> subMenuList = submenuRepository.findSubMenuResponseDtoList();
+
+            System.out.println("subMenuList = " + subMenuList);
+
+            if (subMenuList.isEmpty()){
+                throw new RuntimeException("La lista esta vacia");
+            }
+
+            return subMenuList;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
