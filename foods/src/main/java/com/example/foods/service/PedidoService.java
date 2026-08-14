@@ -16,4 +16,9 @@ public interface PedidoService {
 
     String actualizarPedido(Integer idPedido);
 
+    List<HistorialPedidoDTO> findByFechaAndEstadoPagoIdEstado(
+            LocalDate fecha,
+            Integer idEstado
+    );
+
 }

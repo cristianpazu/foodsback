@@ -47,4 +47,10 @@ public class PedidoController {
         return ResponseEntity.ok(pedidoService.actualizarPedido(id));
     }
 
+    @GetMapping("consultar/pedido/{fechaActual}/{idEstado}")
+    public ResponseEntity<List<HistorialPedidoDTO>> consultarPedidosActuales(@PathVariable("fechaActual") LocalDate fechaActual, @PathVariable("idEstado") Integer idEstado){
+        return ResponseEntity.ok(pedidoService.findByFechaAndEstadoPagoIdEstado(fechaActual,idEstado )
+        );
+    }
+
 }

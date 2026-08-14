@@ -31,6 +31,20 @@ List<HistorialPedidoDTO> findByPedidos();
     List<HistorialPedidoDTO> findByPedidosFecha(
             @Param("fechaInicial") LocalDate fechaInicial,
             @Param("fechaFinal") LocalDate fechaFinal);
+
+    @Query(value = "SELECT new com.example.foods.entidades.dto.HistorialPedidoDTO( p.idPedido, m.nombre, p2.Nombre, p2.Precio, ped.cantidad, p.fecha, p.hora,p.totalCuenta ) " +
+            "FROM Pedido p " +
+            "JOIN Mesas m ON m.idMesas = p.mesas.idMesas " +
+            "JOIN PedidoItem ped ON p.idPedido = ped.idPedidoItem " +
+            "JOIN Productos p2 ON p2.idProductos = ped.productos.idProductos " +
+            "JOIN EstadoPedido ep on ep.idEstado = p.estadoPago.idEstado " +
+            "WHERE p.fecha =:fecha AND ep.idEstado =:idEstado")
+    List<HistorialPedidoDTO>findByPedidosList(LocalDate fecha, Integer idEstado);
+
+
+
+
+
 /*
 select p.id_pedido, m.nombre,p2.nombre, p2.precio, ped.cantidad, p.fecha, p.total_cuenta
 from pedido p inner join mesas m on m.id_mesa = p.mesa_id

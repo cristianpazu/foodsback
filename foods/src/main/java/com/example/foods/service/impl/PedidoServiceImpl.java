@@ -162,6 +162,21 @@ public class PedidoServiceImpl implements PedidoService {
 
         return "Pago realizado";
     }
+
+    @Override
+    public List<HistorialPedidoDTO> findByFechaAndEstadoPagoIdEstado(LocalDate fecha, Integer idEstado) {
+        try{
+
+            return pedidoRepository.findByPedidosList(
+                    fecha,
+                    idEstado
+            );
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
 /*
     @Override
     public Pedido registrarPedido(PedidoRequestDTO dto) {
