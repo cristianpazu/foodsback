@@ -14,6 +14,7 @@ import com.example.foods.repository.pedidos.MesasRepository;
 import com.example.foods.repository.pedidos.PedidoRepository;
 import com.example.foods.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -35,6 +36,9 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Autowired
     EstadoRepository estadoRepository;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @Override
     public Pedido registrarPedido(Pedido pedido) {
@@ -79,7 +83,13 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setEstadoPago(estadoRepository.findById(1).get());
         pedido.setTotalCuenta(totales);
         mesa.setDisponibilidad(false);
-        return pedidoRepository.save(pedido);
+        Pedido pedidoGuardado =  pedidoRepository.save(pedido);
+
+        messagingTemplate.convertAndSend(
+                "/topic/pedidos",
+                pedidoGuardado
+        );
+        return pedidoGuardado;
     }
 
     @Override
