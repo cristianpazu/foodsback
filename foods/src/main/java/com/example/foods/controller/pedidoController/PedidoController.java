@@ -42,7 +42,7 @@ public class PedidoController {
     }
 
 
-    @PostMapping("actualizar/pedido/{id}")
+    @PostMapping("/actualizar/pedido/{id}")
     public ResponseEntity<String> actualizarEstadoPago(@PathVariable Integer id){
         return ResponseEntity.ok(pedidoService.actualizarPedido(id));
     }

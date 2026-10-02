@@ -35,7 +35,7 @@ List<HistorialPedidoDTO> findByPedidos();
     @Query(value = "SELECT new com.example.foods.entidades.dto.HistorialPedidoDTO( p.idPedido, m.nombre, p2.Nombre, p2.Precio, ped.cantidad, p.fecha, p.hora,p.totalCuenta ) " +
             "FROM Pedido p " +
             "JOIN Mesas m ON m.idMesas = p.mesas.idMesas " +
-            "JOIN PedidoItem ped ON p.idPedido = ped.idPedidoItem " +
+            "JOIN PedidoItem ped ON p.idPedido = ped.pedido.idPedido " +
             "JOIN Productos p2 ON p2.idProductos = ped.productos.idProductos " +
             "JOIN EstadoPedido ep on ep.idEstado = p.estadoPago.idEstado " +
             "WHERE p.fecha =:fecha AND ep.idEstado =:idEstado")

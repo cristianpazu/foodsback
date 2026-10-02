@@ -14,8 +14,10 @@ import com.example.foods.repository.pedidos.MesasRepository;
 import com.example.foods.repository.pedidos.PedidoRepository;
 import com.example.foods.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -42,54 +44,63 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     public Pedido registrarPedido(Pedido pedido) {
+        try {
+            System.out.println("pedido.getMesas().getIdMesas() = " + pedido.getMesas().getIdMesas());
+            Mesas mesa = mesasRepository.findById(pedido.getMesas().getIdMesas())
+                    .orElseThrow(() -> new RuntimeException("Mesa no existe"));
 
-        Mesas mesa = mesasRepository.findById(pedido.getMesas().getIdMesas())
-                .orElseThrow(() -> new RuntimeException("Mesa no existe"));
 
-        if (mesa.getDisponibilidad() == false){
-            throw new RuntimeException("Mesa no esta disponible");
+
+            if (mesa.getDisponibilidad() == false) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Mesa no está disponible " + mesa.getNombre()
+                );
+            }
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("HH:mm:ss");
+            String formattedNow = now.format(formatter);
+            String formattedNowHour = now.format(formatterHour);
+
+
+            pedido.setMesas(mesa);
+            pedido.setFecha(LocalDate.parse(formattedNow));
+            pedido.setHora(formattedNowHour);
+
+            Integer totales = 0;
+            for (PedidoItem item : pedido.getItems()) {
+
+                Productos producto = productosRepository
+                        .findById(item.getProductos().getIdProductos())
+                        .orElseThrow(() -> new RuntimeException("Producto no existe"));
+
+                Integer totals = producto.getPrecio() * item.getCantidad();
+
+                item.setProductos(producto);
+                item.setPedido(pedido);
+
+
+                item.setTotal(totals);
+
+                totales += totals;
+
+
+            }
+            pedido.setEstadoPago(estadoRepository.findById(1).get());
+            pedido.setTotalCuenta(totales);
+            mesa.setDisponibilidad(false);
+            Pedido pedidoGuardado = pedidoRepository.save(pedido);
+
+            messagingTemplate.convertAndSend(
+                    "/topic/pedidos",
+                    pedidoGuardado
+            );
+            return pedidoGuardado;
+        } catch (Exception e) {
+            System.out.println("e.toString() = " + e.toString());
+            throw new RuntimeException(e);
         }
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("HH:mm:ss");
-        String formattedNow = now.format(formatter);
-        String formattedNowHour = now.format(formatterHour);
-
-
-
-        pedido.setMesas(mesa);
-        pedido.setFecha(LocalDate.parse(formattedNow));
-        pedido.setHora(formattedNowHour);
-
-        Integer totales = 0;
-        for (PedidoItem item : pedido.getItems()) {
-
-            Productos producto = productosRepository
-                    .findById(item.getProductos().getIdProductos())
-                    .orElseThrow(() -> new RuntimeException("Producto no existe"));
-
-           Integer totals = producto.getPrecio() * item.getCantidad();
-
-            item.setProductos(producto);
-            item.setPedido(pedido);
-
-
-            item.setTotal(totals);
-
-            totales += totals;
-
-
-        }
-        pedido.setEstadoPago(estadoRepository.findById(1).get());
-        pedido.setTotalCuenta(totales);
-        mesa.setDisponibilidad(false);
-        Pedido pedidoGuardado =  pedidoRepository.save(pedido);
-
-        messagingTemplate.convertAndSend(
-                "/topic/pedidos",
-                pedidoGuardado
-        );
-        return pedidoGuardado;
     }
 
     @Override
@@ -166,9 +177,12 @@ public class PedidoServiceImpl implements PedidoService {
         estadoPago.getMesas().setDisponibilidad(true);
 
         // Guardar los cambios
-        pedidoRepository.save(estadoPago);
+      Pedido pedidoGuardado =  pedidoRepository.save(estadoPago);
 
-
+        messagingTemplate.convertAndSend(
+                "/topic/pedido-estado",
+                pedidoGuardado
+        );
 
         return "Pago realizado";
     }
